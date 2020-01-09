@@ -16,17 +16,9 @@ class Timer {
         this.startButton.addEventListener('click', this.start);
         this.pauseButton.addEventListener('click', this.pause);
         this.resetButton.addEventListener('click', this.reset);
+        this.durationInput.addEventListener('keyup', this.onValChange)
     }
 
-    convert = () => {
-        if(this.timeRemaining) {
-            // converts seconds into minutes and seconds for use as HTML string
-            this.minutes = Math.floor(this.timeRemaining / 60);
-            this.seconds = Math.floor(this.timeRemaining - this.minutes * 60)
-            this.timeString = `${this.minutes}m ${this.seconds}s`
-            this.timeDisplay.innerHTML = this.timeString;
-        }
-    }
 
     start = () => {
         if(!this.isRunning) {
@@ -35,13 +27,8 @@ class Timer {
                 this.convert(this.timeRemaining);
                 this.convertInterval = setInterval(this.convert, 1000);
                 // if its paused then restart
-
                 // if value has changed from stored maxTime then start and reinit
-
-                // if 
-                // save entered value as variable
                 if(!this.paused && this.timeRemaining !== this.durationInput.value) {
-
                     this.maxTime = this.timeRemaining;
                 }
                 if(this.paused && this.durationInput.value !== this.timeRemaining) {
@@ -54,9 +41,10 @@ class Timer {
             }
             // start value for timer
 
-            // call tick method immediately and then once every second then
+            // call tick method immediately and then once every second 
             this.tick();
             this.interval = setInterval(this.tick, 20);
+
             //  if display isnt showing, show the display
             if(!this.showDisplay) {
                 this.showDisplay = true;
@@ -66,20 +54,6 @@ class Timer {
         }
 
     };
-
-    display = () => {
-        if(this.showDisplay) {
-            // show minutes seconds display and hide input
-            this.timeDisplay.style = "display: block";
-            this.timeDisplay.innerHTML = this.timeString;
-            this.durationInput.style = "display: none";
-        } else {
-            // else allow editing
-            this.timeDisplay.style = "display: none";
-            this.durationInput.style = "display: block";
-        }
-    }
-
     pause = () => {
         this.isRunning = false;
         this.showDisplay = false;
@@ -94,16 +68,16 @@ class Timer {
     }
 
     reset = () => {
-
         this.isRunning = false;
         this.paused = false;
         // reset to initial time
         if(this.maxTime) {
             this.convert();
-            console.log(this.maxTime);
+
             this.durationInput.value = this.maxTime;
             this.onStart(this.timeRemaining);
             this.onTick(this.timeRemaining);
+
             this.showDisplay = false;
             this.display();
         }
@@ -126,20 +100,40 @@ class Timer {
         } else {
             this.timeRemaining = this.timeRemaining - 0.02;
         }
-        // update text and emit signal
     };
+    display = () => {
+        if(this.showDisplay) {
+            // show minutes seconds display and hide input
+            this.timeDisplay.style = "display: block";
+            this.timeDisplay.innerHTML = this.timeString;
+            this.durationInput.style = "display: none";
+        } else {
+            // else allow editing
+            this.timeDisplay.style = "display: none";
+            this.durationInput.style = "display: block";
+        }
+    }
 
-
-    // getter and setter
+    // getter and setter for time remaining
     get timeRemaining() {
-
         return parseFloat(this.durationInput.value);
     }
     set timeRemaining(time) {
-
         let currTime = time.toFixed(2);
         // int portion
         this.durationInput.value = currTime;
+    }
+
+    convert = () => {
+        if(this.timeRemaining) {
+            // converts seconds into minutes and seconds for use as HTML string
+            this.minutes = Math.floor(this.timeRemaining / 60);
+            this.seconds = Math.floor(this.timeRemaining - this.minutes * 60)
+            this.timeString = `${this.minutes}m ${this.seconds}s`
+            this.timeDisplay.innerHTML = this.timeString;
+        }
+    }
+    onValChange = () => {
 
     }
 }

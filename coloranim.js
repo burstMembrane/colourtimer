@@ -2,12 +2,10 @@ class ColorAnimator {
     constructor(initial, element) {
         // allow SVG styling in jquery color
         jQuery.Color.hook("stroke");
-        // we want to animate SVG fill and stroke properties
 
         // set up variables
         this.jqueryCircle = $("circle");
         this.newColors();
-        this.secondColor = this.getRandColor();
         this.initial = initial;
         this.element = element;
     }
@@ -20,15 +18,16 @@ class ColorAnimator {
         return `rgb(${r},${g},${b})`
     }
     startAnimation = () => {
+        // !TODO Refactor to avoid callback nesting
         // animate between last random and new random color for 1000ms
         this.jqueryCircle.animate({
             'stroke': this.firstColor,
-        }, 1000, () => {
+        }, 250, () => {
             // animate between two random colors for the duration of the timer - 6000ms for other animations
             this.jqueryCircle.animate({
                 'stroke': this.secondColor,
-            }, (this.initial * 1000) - 6000, () => {
-                // for last five seconds, pulsate
+            }, (this.initial * 1000) - 5750, () => {
+                // for last five seconds, pulsate circle
                 for(var i = 0; i < 5; i++) {
                     this.jqueryCircle.fadeTo(500, 0.5).fadeTo(500, 1.0);
                 }
@@ -49,16 +48,13 @@ class ColorAnimator {
             'stroke': this.firstColor,
         }, 500);
     }
-
     newColors = () => {
-
+        // get two random colours and then save them as clas vars
         this.firstColor = jQuery.Color(this.getRandColor()).toHexString()
         this.secondColor = jQuery.Color(this.getRandColor()).toHexString()
-
-
     }
     blinkTimer = () => {
-
+        // blink the timer
         this.timerBlink = setInterval(function() {
             $('.timer').animate({ opacity: 0.5 }, 500).animate({ opacity: 1 }, 500);
         }, 1000);
