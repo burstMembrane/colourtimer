@@ -143,8 +143,12 @@ class Timer {
         this.convert();
         this.showDisplay = false;
         this.timeDisplay.style = "display: none;"
-        if(this.durationInput.value > 0) {
+        if(this.durationInput.value > 0 && this.durationInput.value < 1000) {
+            this.timeInfo.style = "font-size: 32px";
             this.timeInfo.innerHTML = this.timeString;
+        } else if(this.durationInput.value >= 1000) {
+            this.timeInfo.style = "font-size: 24px";
+            this.timeInfo.innerHTML = this.timeString;;
         } else {
             this.timeInfo.innerHTML = "";
         }
