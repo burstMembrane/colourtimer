@@ -4,6 +4,7 @@ class ColorAnimator {
         jQuery.Color.hook("stroke");
 
         // set up variables
+        this.infoBox = $('.info');
         this.jqueryCircle = $("circle");
         this.newColors();
         this.initial = initial;
@@ -18,6 +19,7 @@ class ColorAnimator {
         return `rgb(${r},${g},${b})`
     }
     startAnimation = () => {
+        this.infoBox.hide();
         // !TODO Refactor to avoid callback nesting
         // animate between last random and new random color for 1000ms
         this.jqueryCircle.animate({
@@ -38,6 +40,7 @@ class ColorAnimator {
         this.jqueryCircle.stop();
     }
     resetAnimation = () => {
+        this.infoBox.show();
         clearInterval(this.timerBlink);
         this.jqueryCircle.stop({
             clearQueue: true,

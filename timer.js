@@ -1,10 +1,11 @@
 class Timer {
-    constructor(durationInput, startButton, pauseButton, resetButton, timeDisplay, callbacks) {
+    constructor(durationInput, startButton, pauseButton, resetButton, timeDisplay, timeInfo, callbacks) {
         this.durationInput = durationInput;
         this.startButton = startButton;
         this.pauseButton = pauseButton;
         this.resetButton = resetButton;
         this.timeDisplay = timeDisplay;
+        this.timeInfo = timeInfo;
 
         this.paused = false;
         if(callbacks) {
@@ -125,15 +126,26 @@ class Timer {
     }
 
     convert = () => {
-        if(this.timeRemaining) {
+        if(this.timeRemaining > 60) {
             // converts seconds into minutes and seconds for use as HTML string
             this.minutes = Math.floor(this.timeRemaining / 60);
-            this.seconds = Math.floor(this.timeRemaining - this.minutes * 60)
-            this.timeString = `${this.minutes}m ${this.seconds}s`
+            this.seconds = Math.floor(this.timeRemaining - this.minutes * 60);
+            this.timeString = `${this.minutes}m ${this.seconds}s`;
+            this.timeDisplay.innerHTML = this.timeString;
+        } else {
+            this.seconds = Math.floor(this.timeRemaining);
+            this.timeString = `${this.seconds}s`;
             this.timeDisplay.innerHTML = this.timeString;
         }
     }
     onValChange = () => {
-
+        this.convert();
+        this.showDisplay = false;
+        this.timeDisplay.style = "display: none;"
+        if(this.durationInput.value > 0) {
+            this.timeInfo.innerHTML = this.timeString;
+        } else {
+            this.timeInfo.innerHTML = "";
+        }
     }
 }
