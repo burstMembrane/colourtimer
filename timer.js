@@ -139,6 +139,7 @@ class Timer {
         }
     }
     onValChange = () => {
+        // live show seconds input in minutes
         this.convert();
         this.showDisplay = false;
         this.timeDisplay.style = "display: none;"
