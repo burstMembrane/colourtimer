@@ -31,7 +31,7 @@ const timer = new Timer(durationInput, startButton, pauseButton, resetButton, ti
 
     },
     onComplete() {
-        if(this.animator) { this.animator.completeAnimation({ duration: 400 }); }
+        if(this.animator) { this.animator.completeAnimation({ repeats: 5 }); }
 
     },
     onPause() {
@@ -41,8 +41,10 @@ const timer = new Timer(durationInput, startButton, pauseButton, resetButton, ti
         if(this.animator) this.animator.resetAnimation();
     },
     onFiveSeconds() {
-        this.animator.pulsate();
-        // return to stop pulsate blocking click events
+
+        this.animator.pulsate({ repeats: 5 });
         return;
+        // return to stop pulsate blocking click events
+
     }
 });

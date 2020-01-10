@@ -44,7 +44,6 @@ class Timer {
                 }
                 if(this.paused && this.durationInput.value !== this.timeRemaining) {
                     // value was changed while paused
-
                     this.maxTime = this.durationInput.value;
                     this.paused = false;
                     this.onStart(this.timeRemaining);
@@ -96,19 +95,14 @@ class Timer {
             this.display();
         }
 
-        if(this.onComplete) {
-            this.isRunning = false;
-            this.onComplete();
-        }
+
 
     }
     tick = () => {
         if(this.onTick) {
             this.onTick(this.timeRemaining);
         }
-        if(this.timeRemaining == 5) {
 
-        }
         if(this.timeRemaining <= 0) {
             this.durationInput.value = 0
                 // if at zero, pause

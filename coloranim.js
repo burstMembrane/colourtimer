@@ -22,10 +22,10 @@ class ColorAnimator {
         return `rgb(${r},${g},${b})`
     }
 
-    pulsate = () => {
+    pulsate = ({ repeats }) => {
 
         // for last five seconds, pulsate circle
-        for(var i = 0; i < 5; i++) {
+        for(var i = 0; i < repeats; i++) {
             this.circleParent.animate({ 'opacity': 0.2 }, 500).animate({ 'opacity': 1 }, 500);
         }
     }
@@ -38,7 +38,7 @@ class ColorAnimator {
 
         let animationDuration;
         animationDuration = this.initial * 1000
-        console.log(animationDuration);
+
         if(!this.isAnimationPaused) {
             this.jqueryCircle.animate({
                 'stroke': this.firstColor,
@@ -57,6 +57,8 @@ class ColorAnimator {
         // stop animating the colors and all subsequent animation calls
         this.jqueryCircle.stop();
     }
+
+    // NOT IMPLEMENTED YET
     toggleBackground = (toggle) => {
         console.log(toggle);
         if(toggle) {
@@ -69,7 +71,6 @@ class ColorAnimator {
 
     }
     pauseAnimation = () => {
-
         this.jqueryCircle.pause();
         this.isAnimationPaused = true;
     }
@@ -77,21 +78,21 @@ class ColorAnimator {
         this.jqueryCircle.resume();
         this.isAnimationPaused = false;
     }
-    completeAnimation = ({ duration }) => {
-        for(var i = 0; i < 10; i++) {
+    completeAnimation = ({ repeats }) => {
+        for(var i = 0; i < repeats; i++) {
             this.dispInput.animate({ 'color': 'red' }, 125).animate({ 'color': 'white' }, 125);
         }
 
     }
 
     resetAnimation = () => {
-        this.infoBox.show();
-        this.jqueryCircle.stop({
+        const stopConfig = {
             clearQueue: true,
             jumpToEnd: true
-        });
+        };
+        this.infoBox.show();
+        $('body').stop(stopConfig);
         this.newColors();
-
     }
 
     newColors = () => {
