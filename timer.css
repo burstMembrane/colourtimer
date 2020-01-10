@@ -56,12 +56,12 @@ body {
     width: 240px;
     font-size: 85px;
     text-align: center;
-    transition: 0.5s;
+    transition: font-size 0.5s;
 }
 
 .timer input:hover {
     font-size: 95px;
-    transition: 0.5s;
+    transition: font-size 0.5s;
 }
 
 .timer button {
@@ -76,6 +76,14 @@ body {
 
 .timer input:focus {
     outline: none;
+}
+
+.red {
+    background-color: red !important;
+}
+
+svg {
+    z-index: -9999;
 }
 
 button {

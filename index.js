@@ -12,25 +12,37 @@ circle.setAttribute('stroke-dasharray', perimeter + 1);
 let duration;
 
 const timer = new Timer(durationInput, startButton, pauseButton, resetButton, timeDisplay, timeInfo, {
+
+
     onStart(totalDuration) {
         if(!this.paused) {
             duration = totalDuration;
+
             this.animator = new ColorAnimator(totalDuration, circle)
         }
-        this.animator.startAnimation();
+        if(this.animator) this.animator.startAnimation();
     },
     onTick(timeRemaining) {
+
         circle.setAttribute('stroke-dashoffset',
             perimeter * timeRemaining / duration - perimeter
         );
+
+
     },
     onComplete() {
-        if(this.animator) {
-            this.animator.blinkTimer();
-            this.animator.resetAnimation();
-        }
+        if(this.animator) { this.animator.completeAnimation({ duration: 400 }); }
+
     },
     onPause() {
-        if(this.animator) { this.animator.stopAnimation() }
+        if(this.animator) this.animator.pauseAnimation();
+    },
+    onReset() {
+        if(this.animator) this.animator.resetAnimation();
+    },
+    onFiveSeconds() {
+        this.animator.pulsate();
+        // return to stop pulsate blocking click events
+        return;
     }
 });

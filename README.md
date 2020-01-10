@@ -20,6 +20,4 @@ Live demo [here](https://www.liamfpower.com/colourtimer)
 
 Distributed under the MIT License. See LICENSE for more information.
 
-## Contact
-Liam Power - @liamfpower - liamfpower@gmail.com
 
